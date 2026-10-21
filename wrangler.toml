@@ -1,0 +1,33 @@
+name = "aws-cloudflare-s3-edge-router"
+main = "src/index.ts"
+compatibility_date = "2024-10-22"
+compatibility_flags = ["nodejs_compat"]
+
+# Cloudflare R2 Bucket Binding for Tiered Storage Cache
+[[r2_buckets]]
+binding = "MEDIA_R2"
+bucket_name = "media-cache-edge"
+
+# Cloudflare KV Namespaces
+[[kv_namespaces]]
+binding = "REVOKED_TOKENS_KV"
+id = "revoked-tokens-kv-id"
+
+[[kv_namespaces]]
+binding = "ROUTING_CONFIG_KV"
+id = "routing-config-kv-id"
+
+# Edge Router Environment Variables
+[vars]
+AWS_REGION = "us-east-1"
+S3_BUCKET_NAME = "my-media-origin-bucket"
+CACHE_MANIFEST_TTL = "2"
+CACHE_SEGMENT_TTL = "31536000"
+ASYNC_HYDRATION_ENABLED = "true"
+ENABLE_GEO_STEERING = "true"
+ALLOWED_ORIGINS = "*"
+
+# Note: The following secrets should be configured via `wrangler secret put` or Terraform:
+# - AWS_ACCESS_KEY_ID
+# - AWS_SECRET_ACCESS_KEY
+# - AUTH_SECRET_KEY

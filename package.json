@@ -1,0 +1,23 @@
+{
+  "name": "aws-cloudflare-s3-edge-router",
+  "version": "1.0.0",
+  "description": "High-Throughput Edge Media Streaming Router with Cloudflare Workers, R2 Tiered Cache, and AWS S3 Origin",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --format=esm --target=es2022 --outfile=dist/index.js --sourcemap",
+    "typecheck": "tsc --noEmit",
+    "generate-token": "node scripts/generate-token.js"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241022.0",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "author": "",
+  "license": "Apache-2.0"
+}

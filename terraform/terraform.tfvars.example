@@ -1,0 +1,47 @@
+## -----------------------------------------------------------------------------
+## Production Terraform Configuration Example
+## High-Throughput Edge Media Streaming Router
+## -----------------------------------------------------------------------------
+
+# AWS Origin Configuration
+region      = "us-east-1"
+environment = "prod"
+
+# S3 Origin Bucket Settings
+bucket_name_prefix    = "media-origin"
+bucket_name           = null # Set to custom bucket name or leave null for auto-generated with random suffix
+force_destroy         = false
+s3_versioning_enabled = true
+
+# Cloudflare Account & Zone
+cloudflare_api_token  = "your-cloudflare-api-token"
+cloudflare_account_id = "your-cloudflare-account-id"
+cloudflare_zone_id    = "your-cloudflare-zone-id"
+
+# Edge Router & Caching Tier
+r2_bucket_name     = "media-cache-edge"
+r2_location        = "wnam"
+worker_name        = "edge-media-router"
+worker_script_path = "../dist/index.js"
+route_patterns     = ["media.yourdomain.com/*"]
+
+# Custom Domain (Optional)
+enable_custom_domain = false
+custom_domain        = "media.yourdomain.com"
+
+# Playback HMAC Token Secret Key (Must be at least 32 characters in production)
+auth_secret_key = "production-hmac-sha256-streaming-token-secret-key-32chars"
+
+# Edge Security & WAF Rate Limiting
+enable_tiered_cache          = true
+enable_waf_rate_limiting     = true
+manifest_rate_limit_requests = 60
+manifest_rate_limit_period   = 60
+segment_rate_limit_requests  = 1200
+segment_rate_limit_period    = 60
+enable_geo_blocking          = false
+blocked_countries            = []
+
+# Observability & Alerts
+alert_email               = "media-ops@yourdomain.com"
+enable_cloudflare_logpush = false
